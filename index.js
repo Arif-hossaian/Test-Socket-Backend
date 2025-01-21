@@ -7,6 +7,9 @@ const setupSocket = require('./config/socketConfigSetup');
 const serviceRoutes = require('./routes/serviceRoute');
 const notificationRoutes = require('./routes/notificationRoute');
 
+const launchRoutes = require('./routes/launch/launchRoutes');
+
+
 const app = express();
 const server = http.createServer(app);
 
@@ -27,6 +30,10 @@ pool.query('SELECT NOW()', (err, res) => {
 app.use('/api/notifications', notificationRoutes);
 
 app.use('/api', serviceRoutes);
+
+
+app.use('/api/launche', launchRoutes);
+
 
 // Setup Socket.IO
 const io = setupSocket(server);
