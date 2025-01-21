@@ -8,6 +8,8 @@ const serviceRoutes = require('./routes/serviceRoute');
 const notificationRoutes = require('./routes/notificationRoute');
 
 const launchRoutes = require('./routes/launch/launchRoutes');
+const userRoutes = require('./routes/user/userRoutes');
+
 
 
 const app = express();
@@ -33,6 +35,8 @@ app.use('/api', serviceRoutes);
 
 
 app.use('/api/launche', launchRoutes);
+app.use('/api/user', userRoutes);
+
 
 
 // Setup Socket.IO
