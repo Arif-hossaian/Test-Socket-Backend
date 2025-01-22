@@ -7,8 +7,8 @@ const UserModel = {
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         username VARCHAR(50) NOT NULL UNIQUE,
         email VARCHAR(100) NOT NULL UNIQUE,
-        password_hash TEXT NOT NULL,
-        role VARCHAR(50) DEFAULT 'USER' CHECK (role IN ('USER', 'ADMIN', 'MODERATOR)),
+        password TEXT NOT NULL,
+        role VARCHAR(50) DEFAULT 'USER' CHECK (role IN ('USER', 'ADMIN', 'MODERATOR')),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE
       );
@@ -16,13 +16,13 @@ const UserModel = {
     await db.query(query);
   },
 
-  async create({ username, email, passwordHash, role }) {
+  async create({ username, email, password, role }) {
     const query = `
-      INSERT INTO users (username, email, password_hash, role)
+      INSERT INTO users (username, email, password, role)
       VALUES ($1, $2, $3, $4)
       RETURNING id, username, email, role, created_at;
     `;
-    const values = [username, email, passwordHash, role];
+    const values = [username, email, password, role];
     const { rows } = await db.query(query, values);
     return rows[0];
   },

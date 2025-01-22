@@ -1,10 +1,11 @@
-const LaunchModel = require('../../controller/launch/launchController');
+const LaunchModel = require('../../models/launch/LaunchModel');
 
 const LaunchController = {
   async createLaunch(req, res, next) {
     try {
-      await LaunchModel.ensureTableExists();
       const { launchName, creatorId, status, launchDescription } = req.body;
+      await LaunchModel.ensureTableExists();
+
       const launch = await LaunchModel.create({
         launchName,
         creatorId,
@@ -20,7 +21,9 @@ const LaunchController = {
   async getAllLaunches(req, res, next) {
     try {
       const launches = await LaunchModel.getAll();
-      res.status(200).json(launches);
+      res
+        .status(200)
+        .json({ error: false, message: 'Success', data: launches });
     } catch (error) {
       next(error);
     }
